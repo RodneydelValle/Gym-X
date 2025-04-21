@@ -85,6 +85,19 @@ function agregarEjercicioUI(nombreEjercicio) {
     box.querySelector(".reps").value = "";
     box.querySelector(".comentario").value = "";
   };
+  const btnEliminarEjercicio = document.createElement("button");
+btnEliminarEjercicio.textContent = "❌ Eliminar ejercicio";
+btnEliminarEjercicio.classList.add("btn-eliminar-ejercicio");
+
+btnEliminarEjercicio.onclick = () => {
+  alert("⚠ WARNING: ESTÁS A PUNTO DE BORRAR UN PROGRESO");
+  if (confirm("¿Seguro?")) {
+    box.remove();
+  }
+};
+
+box.querySelector(".contenido-ejercicio").appendChild(btnEliminarEjercicio);
+
 }
 
 function mostrarAvance(container, data, docId = null) {
