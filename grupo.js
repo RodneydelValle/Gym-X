@@ -125,13 +125,28 @@ box.querySelector(".contenido-ejercicio").appendChild(btnEliminarEjercicio);
 function mostrarAvance(container, data, docId = null) {
     const div = document.createElement("div");
     div.className = "avance-item";
+  
+    // Convertir timestamp a fecha dd/mm/aa
+    const fecha = data.timestamp
+      ? new Date(data.timestamp).toLocaleDateString("es-CL", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "2-digit"
+        })
+      : "";
+  
+      
     div.innerHTML = `
-      <strong>${data.peso} kg</strong><br>
-      ${data.series} x ${data.repeticiones}<br>
-      <em>${data.comentario || ''}</em><br>
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span><strong>${data.peso} kg</strong><br>
+        ${data.series} x ${data.repeticiones}<br>
+        <em>${data.comentario || ''}</em></span>
+        <small style="color:#888; font-size:0.85em;">${fecha}</small>
+      </div>
       <button>📝 Editar</button>
       <button>🗑 Eliminar</button>
     `;
+
 
   const [btnEditar, btnEliminar] = div.querySelectorAll("button");
 
