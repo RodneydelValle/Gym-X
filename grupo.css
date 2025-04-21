@@ -1,0 +1,73 @@
+/* 🎃 Halloween Theme CSS */
+
+body {
+    background-color: #373038;
+    color: #FFC341;
+    font-family: 'Segoe UI', sans-serif;
+    padding: 20px;
+  }
+  
+  h1, h2, h3, h4 {
+    color: #FFC341;
+  }
+  
+  button {
+    background-color: #FB702D;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background 0.3s;
+  }
+  
+  button:hover {
+    background-color: #862FE0;
+  }
+  
+  input[type="number"],
+  input[type="text"] {
+    width: 100%;
+    padding: 6px;
+    margin-bottom: 6px;
+    border: 1px solid #88E032;
+    border-radius: 4px;
+    background-color: #262223;
+    color: #FFC341;
+  }
+  
+  label {
+    color: #88E032;
+    font-weight: bold;
+  }
+  
+  .ejercicio-box {
+    background-color: #262223;
+    border: 2px solid #862FE0;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 25px;
+  }
+  
+  summary {
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #FB702D;
+    margin-bottom: 10px;
+  }
+  
+  .avance-item {
+    background-color: #3a2f36;
+    border: 1px solid #88E032;
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 12px;
+    color: #FFC341;
+  }
+  
+  .avance-item button {
+    margin-top: 5px;
+    margin-right: 8px;
+  }
+  

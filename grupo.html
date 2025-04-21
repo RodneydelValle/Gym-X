@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Grupo Muscular</title>
+  <link rel="stylesheet" href="grupo.css">
+</head>
+<body>
+  <button onclick="window.history.back()">⬅ Volver</button>
+  <h2 id="tituloGrupo"></h2>
+
+  <div>
+    <label class="campo">Nuevo ejercicio:
+      <input type="text" id="nuevoEjercicioNombre">
+      <button onclick="crearEjercicio()">Crear ejercicio</button>
+    </label>
+  </div>
+
+  <div id="ejerciciosContainer"></div>
+
+  <script type="module" src="grupo.js"></script>
+</body>
+</html>
