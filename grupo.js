@@ -89,12 +89,34 @@ function agregarEjercicioUI(nombreEjercicio) {
 btnEliminarEjercicio.textContent = "❌ Eliminar ejercicio";
 btnEliminarEjercicio.classList.add("btn-eliminar-ejercicio");
 
-btnEliminarEjercicio.onclick = () => {
-  alert("⚠ WARNING: ESTÁS A PUNTO DE BORRAR UN PROGRESO");
-  if (confirm("¿Seguro?")) {
-    box.remove();
-  }
-};
+btnEliminarEjercicio.onclick = async () => {
+    alert("⚠ WARNING: ESTÁS A PUNTO DE BORRAR UN PROGRESO");
+  
+    if (confirm("¿Seguro?")) {
+      try {
+        // Eliminar del DOM
+        box.remove();
+  
+        // Eliminar todos los avances del ejercicio en Firebase
+        const avancesQuery = query(
+          collection(db, "progresoGym"),
+          where("usuario", "==", usuario),
+          where("grupo", "==", grupo),
+          where("ejercicio", "==", nombreEjercicio)
+        );
+  
+        const snapshot = await getDocs(avancesQuery);
+        const eliminaciones = snapshot.docs.map(docu => deleteDoc(doc(db, "progresoGym", docu.id)));
+  
+        await Promise.all(eliminaciones);
+  
+      } catch (error) {
+        console.error("Error al eliminar el ejercicio completo:", error);
+        alert("❌ No se pudo eliminar correctamente de la base de datos.");
+      }
+    }
+  };
+  
 
 box.querySelector(".contenido-ejercicio").appendChild(btnEliminarEjercicio);
 
