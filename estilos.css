@@ -94,7 +94,7 @@ body {
   
   input[type=number],
   input[type=text] {
-    width: 80%;
+    width: 95%;
     padding: 8px;
     border-radius: 5px;
     border: 1px solid #862FE0;
