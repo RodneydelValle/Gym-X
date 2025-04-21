@@ -1,28 +1,171 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <title>Seleccionar grupo</title>
-  <link rel="stylesheet" href="estilos.css">
-</head>
-<body>
-  <button onclick="window.history.back()">⬅ Volver</button>
-  <h1 id="tituloUsuario"></h1>
-
-  <div class="seccion-muscular">
-    <div class="musculo"><a id="linkPecho">Pecho</a></div>
-    <div class="musculo"><a id="linkEspalda">Espalda</a></div>
-    <div class="musculo"><a id="linkPiernas">Piernas</a></div>
-  </div>
-
-  <script>
-    const params = new URLSearchParams(location.search);
-    const nombre = params.get("nombre") || "Usuario";
-    document.getElementById("tituloUsuario").textContent = `Hola, ${nombre}`;
-
-    document.getElementById("linkPecho").href = `grupo.html?nombre=${nombre}&grupo=Pecho`;
-    document.getElementById("linkEspalda").href = `grupo.html?nombre=${nombre}&grupo=Espalda`;
-    document.getElementById("linkPiernas").href = `grupo.html?nombre=${nombre}&grupo=Piernas`;
-  </script>
-</body>
-</html>
+/* 🎨 Estilo general */
+body {
+    background-color: #1e1e1e;
+    color: #FFC341;
+    font-family: 'Segoe UI', sans-serif;
+    padding: 40px;
+    text-align: center;
+  }
+  
+  h1, h2 {
+    color: #FB702D;
+    font-size: 2.2em;
+    margin-bottom: 30px;
+  }
+  
+  button {
+    background-color: #FB702D;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+  }
+  
+  button:hover {
+    background-color: #862FE0;
+  }
+  
+  /* 🎽 Sección muscular (usuarios.html) */
+  .seccion-muscular {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+  
+  .musculo {
+    background-color: #373038;
+    border: 3px solid #862FE0;
+    border-radius: 12px;
+    padding: 20px 30px;
+    min-width: 180px;
+    color: #88E032;
+    font-weight: bold;
+    font-size: 1.3em;
+    cursor: pointer;
+    transition: transform 0.2s, background 0.3s;
+  }
+  
+  .musculo:hover {
+    background-color: #262223;
+    transform: scale(1.05);
+    color: #FFC341;
+    border-color: #FB702D;
+  }
+  
+  .musculo a {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  
+  /* 📦 Ejercicio y avance (grupo.html) */
+  .ejercicio-box {
+    margin-top: 20px;
+    border: 2px solid #88E032;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #111;
+    text-align: left;
+  }
+  
+  label {
+    display: block;
+    margin: 8px 0;
+    font-weight: bold;
+    color: #88E032;
+  }
+  
+  input[type=number],
+  input[type=text] {
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #862FE0;
+    background-color: #262223;
+    color: #88E032;
+    font-size: 1em;
+  }
+  
+  .avance-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+  }
+  
+  .avance-item {
+    border: 1px solid #FB702D;
+    background-color: #030;
+    padding: 12px;
+    border-radius: 6px;
+    min-width: 160px;
+    color: #88E032;
+  }
+  
+  /* ✅ Responsive móvil */
+  @media screen and (max-width: 768px) {
+    html {
+      font-size: 18px;
+    }
+  
+    body {
+      padding: 20px;
+      font-size: 1.1rem;
+    }
+  
+    h1, h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+  
+    .seccion-muscular {
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+  
+    .musculo {
+      width: 90%;
+      font-size: 1.2rem;
+      padding: 16px;
+    }
+  
+    .avance-lista {
+      flex-direction: column;
+      gap: 12px;
+    }
+  
+    .avance-item {
+      min-width: auto;
+      font-size: 1.1rem;
+      padding: 14px;
+    }
+  
+    .ejercicio-box {
+      font-size: 1.1rem;
+      padding: 20px;
+    }
+  
+    label,
+    input,
+    button {
+      font-size: 1.1rem;
+    }
+  
+    input[type=number],
+    input[type=text] {
+      padding: 10px;
+    }
+  
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+    }
+  }
+  
