@@ -1,0 +1,38 @@
+/* 🕸️ Halloween Style for index.html */
+
+body {
+    background-color: #373038;
+    color: #FFC341;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+  }
+  
+  h2 {
+    font-size: 2em;
+    color: #FB702D;
+    margin-bottom: 40px;
+  }
+  
+  button {
+    background-color: #88E032;
+    color: #000;
+    border: none;
+    padding: 12px 20px;
+    margin: 10px;
+    font-size: 1.1em;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #862FE0;
+    color: #fff;
+  }
+  
