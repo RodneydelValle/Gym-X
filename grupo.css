@@ -70,4 +70,94 @@ body {
     margin-top: 5px;
     margin-right: 8px;
   }
+  @media screen and (max-width: 768px) {
+  body {
+    padding: 20px;
+    font-size: 1.1em;
+  }
+
+  h2 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+  }
+
+  .ejercicio-box {
+    padding: 20px;
+    margin-bottom: 25px;
+    font-size: 1.1em;
+  }
+
+  .avance-lista {
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .avance-item {
+    min-width: auto;
+    font-size: 1.1em;
+    padding: 14px;
+  }
+
+  label {
+    font-size: 1.1em;
+    margin-top: 10px;
+  }
+
+  input[type=number],
+  input[type=text] {
+    font-size: 1.1em;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1em;
+    margin-top: 10px;
+  }
+}
+html {
+    font-size: 16px;
+  }
+  
+  @media screen and (max-width: 768px) {
+    html {
+      font-size: 18px; /* Aumenta base en móviles */
+    }
+  
+    body {
+      font-size: 1.1rem;
+      padding: 20px;
+    }
+  
+    h2 {
+      font-size: 1.8rem;
+    }
+  
+    .ejercicio-box {
+      font-size: 1.1rem;
+      padding: 20px;
+    }
+  
+    label,
+    input,
+    .avance-item,
+    button {
+      font-size: 1.1rem;
+    }
+  
+    input[type=number],
+    input[type=text] {
+      padding: 10px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+  
+    button {
+      width: 100%;
+      padding: 12px;
+    }
+  }
   
