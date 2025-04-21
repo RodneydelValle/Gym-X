@@ -1,21 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <title>Progreso Gym</title>
   <link rel="stylesheet" href="index.css">
 </head>
+
 <body>
+    
   <h2>Selecciona un usuario</h2>
 
   <button onclick="irAVentana('Roy')">Roy</button>
   <button onclick="irAVentana('Fran')">Fran</button>
 
   <script>
-    function irAVentana(nombre) {
-      window.location.href = `roy.html?nombre=${nombre}`;
-    }
+function irAVentana(nombre) {
+  window.location.href = `usuario.html?nombre=${nombre}`;
+}
+
   </script>
 </body>
+
 </html>
