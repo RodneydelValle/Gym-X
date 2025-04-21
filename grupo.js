@@ -88,15 +88,15 @@ function agregarEjercicioUI(nombreEjercicio) {
 }
 
 function mostrarAvance(container, data, docId = null) {
-  const div = document.createElement("div");
-  div.className = "avance-item";
-  div.innerHTML = `
-    <strong>${data.peso} kg</strong><br>
-    ${data.series} x ${data.repeticiones}<br>
-    <em>${data.comentario || ''}</em><br>
-    <button>📝 Editar</button>
-    <button>🗑 Eliminar</button>
-  `;
+    const div = document.createElement("div");
+    div.className = "avance-item";
+    div.innerHTML = `
+      <strong>${data.peso} kg</strong><br>
+      ${data.series} x ${data.repeticiones}<br>
+      <em>${data.comentario || ''}</em><br>
+      <button>📝 Editar</button>
+      <button>🗑 Eliminar</button>
+    `;
 
   const [btnEditar, btnEliminar] = div.querySelectorAll("button");
 
@@ -137,7 +137,8 @@ function mostrarAvance(container, data, docId = null) {
     }
   };
 
-  container.appendChild(div);
+  container.insertBefore(div, container.firstChild);
+
 }
 
 window.addEventListener("DOMContentLoaded", async () => {
