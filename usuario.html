@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Seleccionar grupo</title>
   <link rel="stylesheet" href="estilos.css">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 </head>
 <body>
@@ -12,7 +12,8 @@
     <button onclick="window.history.back()">⬅ Volver</button>
     <h1 id="tituloUsuario"></h1>
 
-    <div class="seccion-muscular">
+    <div id="grupoMuscular" class="seccion-muscular">
+
       <div class="musculo"><a id="linkPecho">Pecho</a></div>
       <div class="musculo"><a id="linkEspalda">Espalda</a></div>
       <div class="musculo"><a id="linkPiernas">Piernas</a></div>
@@ -28,5 +29,16 @@
     document.getElementById("linkEspalda").href = `grupo.html?nombre=${nombre}&grupo=Espalda`;
     document.getElementById("linkPiernas").href = `grupo.html?nombre=${nombre}&grupo=Piernas`;
   </script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+<script>
+  new Sortable(document.getElementById("grupoMuscular"), {
+    animation: 150,
+    ghostClass: 'drag-ghost',
+    forceFallback: true, // para mejor soporte móvil
+    fallbackTolerance: 5
+  });
+</script>
+
 </body>
 </html>
