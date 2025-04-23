@@ -1,12 +1,11 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <title>Grupo Muscular</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="estilos.css">
-  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 <body>
   <button onclick="window.history.back()">⬅ Volver</button>
@@ -21,30 +20,6 @@
 
   <div id="ejerciciosContainer"></div>
 
-  <script type="module">
-    import './grupo.js';
-    import Sortable from "https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/modular/sortable.esm.js";
-
-    const container = document.getElementById("ejerciciosContainer");
-
-    new Sortable(container, {
-      animation: 150,
-      handle: ".drag-handle", // Se podrá arrastrar sólo desde este área
-      onEnd: async () => {
-        const orden = [...container.children].map(div =>
-          div.querySelector("summary")?.textContent.trim()
-        );
-        const usuario = new URLSearchParams(location.search).get("nombre") || "Usuario";
-        const grupo = new URLSearchParams(location.search).get("grupo") || "Grupo";
-        const { getFirestore, doc, setDoc } = await import("https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js");
-        const db = getFirestore();
-        await setDoc(doc(db, "ordenEjercicios", `${usuario}_${grupo}`), {
-          usuario,
-          grupo,
-          orden
-        });
-      }
-    });
-  </script>
+  <script type="module" src="grupo.js"></script>
 </body>
 </html>
