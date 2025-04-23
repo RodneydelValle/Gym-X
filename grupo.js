@@ -1,11 +1,10 @@
+// grupo.js actualizado con vista colapsable por ejercicio
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
 import {
   getFirestore, collection, addDoc, query, where, orderBy, getDocs,
-  deleteDoc, doc, updateDoc, setDoc, getDoc
+  deleteDoc, doc, updateDoc
 } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
-
-import Sortable from "https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/modular/sortable.esm.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyBZrqT-PX55Ms6fWSUIT8RN4L_Uk-j5qTI",
@@ -39,8 +38,6 @@ function agregarEjercicioUI(nombreEjercicio) {
 
   const box = document.createElement("div");
   box.className = "ejercicio-box";
-  box.setAttribute("data-ejercicio", nombreEjercicio);
-
   box.innerHTML = `
     <details>
       <summary><strong>${nombreEjercicio}</strong></summary>
@@ -50,7 +47,6 @@ function agregarEjercicioUI(nombreEjercicio) {
         <label class="campo">Repeticiones: <input type="number" class="reps"></label>
         <label class="campo">Comentario: <input type="text" class="comentario"></label>
         <button class="guardarBtn">Guardar avance</button>
-        <button class="eliminarEjercicioBtn">Eliminar ejercicio</button>
         <div class="avance-lista"></div>
       </div>
     </details>
@@ -81,45 +77,76 @@ function agregarEjercicioUI(nombreEjercicio) {
     });
 
     mostrarAvance(box.querySelector(".avance-lista"), {
-      peso, series, repeticiones: repes, comentario, timestamp: Date.now()
+      peso, series, repeticiones: repes, comentario
     }, ref.id);
-  };
 
-  const btnEliminar = box.querySelector(".eliminarEjercicioBtn");
-  btnEliminar.onclick = async () => {
+    box.querySelector(".peso").value = "";
+    box.querySelector(".series").value = "";
+    box.querySelector(".reps").value = "";
+    box.querySelector(".comentario").value = "";
+  };
+  const btnEliminarEjercicio = document.createElement("button");
+btnEliminarEjercicio.textContent = "❌ Eliminar ejercicio";
+btnEliminarEjercicio.classList.add("btn-eliminar-ejercicio");
+
+btnEliminarEjercicio.onclick = async () => {
     alert("⚠ WARNING: ESTÁS A PUNTO DE BORRAR UN PROGRESO");
+  
     if (confirm("¿Seguro?")) {
-      const q = query(collection(db, "progresoGym"),
-        where("usuario", "==", usuario),
-        where("grupo", "==", grupo),
-        where("ejercicio", "==", nombreEjercicio));
-      const snap = await getDocs(q);
-      for (let docu of snap.docs) {
-        await deleteDoc(doc(db, "progresoGym", docu.id));
+      try {
+        // Eliminar del DOM
+        box.remove();
+  
+        // Eliminar todos los avances del ejercicio en Firebase
+        const avancesQuery = query(
+          collection(db, "progresoGym"),
+          where("usuario", "==", usuario),
+          where("grupo", "==", grupo),
+          where("ejercicio", "==", nombreEjercicio)
+        );
+  
+        const snapshot = await getDocs(avancesQuery);
+        const eliminaciones = snapshot.docs.map(docu => deleteDoc(doc(db, "progresoGym", docu.id)));
+  
+        await Promise.all(eliminaciones);
+  
+      } catch (error) {
+        console.error("Error al eliminar el ejercicio completo:", error);
+        alert("❌ No se pudo eliminar correctamente de la base de datos.");
       }
-      box.remove();
     }
   };
+  
+
+box.querySelector(".contenido-ejercicio").appendChild(btnEliminarEjercicio);
+
 }
 
 function mostrarAvance(container, data, docId = null) {
-  const div = document.createElement("div");
-  div.className = "avance-item";
+    const div = document.createElement("div");
+    div.className = "avance-item";
+  
+    // Convertir timestamp a fecha dd/mm/aa
+    const fecha = data.timestamp
+      ? new Date(data.timestamp).toLocaleDateString("es-CL", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "2-digit"
+        })
+      : "";
+  
+      
+    div.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center;">
+        <span><strong>${data.peso} kg</strong><br>
+        ${data.series} x ${data.repeticiones}<br>
+        <em>${data.comentario || ''}</em></span>
+        <small style="color:#888; font-size:0.85em;">${fecha}</small>
+      </div>
+      <button>📝 Editar</button>
+      <button>🗑 Eliminar</button>
+    `;
 
-  const fecha = data.timestamp
-    ? new Date(data.timestamp).toLocaleDateString("es-CL", {
-        day: "2-digit", month: "2-digit", year: "2-digit"
-      })
-    : "";
-
-  div.innerHTML = `
-    <div style="display:flex; justify-content:space-between; align-items:center;">
-      <span><strong>${data.peso} kg</strong><br>${data.series} x ${data.repeticiones}<br><em>${data.comentario || ''}</em></span>
-      <small style="color:#888; font-size:0.85em;">${fecha}</small>
-    </div>
-    <button>📝 Editar</button>
-    <button>🗑 Eliminar</button>
-  `;
 
   const [btnEditar, btnEliminar] = div.querySelectorAll("button");
 
@@ -142,28 +169,31 @@ function mostrarAvance(container, data, docId = null) {
         series: Number(nuevasSeries),
         repeticiones: Number(nuevasReps),
         comentario: nuevoComentario
+      }).then(() => {
+        div.innerHTML = `
+          <strong>${nuevoPeso} kg</strong><br>
+          ${nuevasSeries} x ${nuevasReps}<br>
+          <em>${nuevoComentario}</em><br>
+          <button>📝 Editar</button>
+          <button>🗑 Eliminar</button>
+        `;
+        mostrarAvance(container, {
+          peso: nuevoPeso,
+          series: nuevasSeries,
+          repeticiones: nuevasReps,
+          comentario: nuevoComentario
+        }, docId);
       });
-      div.querySelector("span").innerHTML = `
-        <strong>${nuevoPeso} kg</strong><br>
-        ${nuevasSeries} x ${nuevasReps}<br>
-        <em>${nuevoComentario}</em>
-      `;
     }
   };
 
   container.insertBefore(div, container.firstChild);
+
 }
 
 window.addEventListener("DOMContentLoaded", async () => {
-  const container = document.getElementById("ejerciciosContainer");
-  let ordenPersonalizado = [];
-
-  const ordenDoc = await getDoc(doc(db, "ordenEjercicios", `${usuario}_${grupo}`));
-  if (ordenDoc.exists()) {
-    ordenPersonalizado = ordenDoc.data().orden || [];
-  }
-
-  const q = query(collection(db, "progresoGym"),
+  const q = query(
+    collection(db, "progresoGym"),
     where("usuario", "==", usuario),
     where("grupo", "==", grupo),
     orderBy("timestamp", "asc")
@@ -171,6 +201,7 @@ window.addEventListener("DOMContentLoaded", async () => {
 
   const snapshot = await getDocs(q);
   const ejerciciosAgrupados = {};
+
   snapshot.forEach(docSnap => {
     const data = docSnap.data();
     const ejercicio = data.ejercicio;
@@ -178,40 +209,21 @@ window.addEventListener("DOMContentLoaded", async () => {
     ejerciciosAgrupados[ejercicio].push({ ...data, id: docSnap.id });
   });
 
-  const nombres = ordenPersonalizado.length > 0
-    ? ordenPersonalizado
-    : Object.keys(ejerciciosAgrupados);
-
-  nombres.forEach(nombreEjercicio => {
+  Object.keys(ejerciciosAgrupados).forEach(nombreEjercicio => {
     agregarEjercicioUI(nombreEjercicio);
   });
 
   setTimeout(() => {
-    nombres.forEach(nombreEjercicio => {
+    Object.keys(ejerciciosAgrupados).forEach(nombreEjercicio => {
       const box = [...document.querySelectorAll(".ejercicio-box")].find(div =>
         div.querySelector("summary")?.textContent === nombreEjercicio
       );
       if (box) {
         const contenedor = box.querySelector(".avance-lista");
-        ejerciciosAgrupados[nombreEjercicio]?.forEach(data => {
+        ejerciciosAgrupados[nombreEjercicio].forEach(data => {
           mostrarAvance(contenedor, data, data.id);
         });
       }
     });
   }, 100);
-
-  // Activar ordenamiento drag & drop
-  new Sortable(container, {
-    animation: 150,
-    onEnd: async () => {
-      const orden = [...container.children].map(div =>
-        div.querySelector("summary")?.textContent.trim()
-      );
-      await setDoc(doc(db, "ordenEjercicios", `${usuario}_${grupo}`), {
-        usuario,
-        grupo,
-        orden
-      });
-    }
-  });
 });
