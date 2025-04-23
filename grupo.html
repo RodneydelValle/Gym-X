@@ -23,15 +23,13 @@
 
   <script type="module">
     import './grupo.js';
-
-    // Corregir que Sortable no bloquee <summary>
     import Sortable from "https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/modular/sortable.esm.js";
+
     const container = document.getElementById("ejerciciosContainer");
 
     new Sortable(container, {
       animation: 150,
-      filter: "summary",
-      preventOnFilter: false,
+      handle: ".drag-handle", // Se podrá arrastrar sólo desde este área
       onEnd: async () => {
         const orden = [...container.children].map(div =>
           div.querySelector("summary")?.textContent.trim()
